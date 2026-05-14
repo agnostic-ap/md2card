@@ -47,7 +47,6 @@ import {
 } from '@/components/ui/select'
 
 import type { ManagedTemplate } from '@/features/ai/types'
-import { useWorkspaceSync } from '@/state/WorkspaceSync'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -106,7 +105,8 @@ function promptHint(prompt: string): string {
 export function AiGenerateDialog() {
   const { dispatch } = useEditor()
   const { view: editorView } = useEditorViewBridge()
-  const { cloudTemplates, pushTemplates } = useWorkspaceSync()
+  const cloudTemplates: import('@/features/ai/types').ManagedTemplate[] = []
+  const pushTemplates = (_: import('@/features/ai/types').ManagedTemplate[]) => {}
 
   const [open, setOpen] = useState(false)
   const [dialogView, setDialogView] = useState<DialogView>('main')
