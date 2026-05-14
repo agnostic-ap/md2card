@@ -6,6 +6,8 @@
 
 🌐 **在线体验**：[mdcard.cn](https://mdcard.cn)（即将上线）
 
+![编辑器截图](docs/screenshots/editor.png)
+
 ---
 
 ## 功能亮点
@@ -15,6 +17,8 @@
 - **多卡片分页** — 用 `===` 把一篇 Markdown 拆成多张卡片，批量导出为 ZIP
 - **多格式导出** — PNG（高清 1×/2×/3×）、SVG、卡片 PDF、A4 文档 PDF、Markdown 原文
 - **AI 辅助生成** — 接入 OpenAI / Claude / 豆包 / 通义千问等，一句话生成结构化卡片内容
+
+  ![AI 生成](docs/screenshots/ai-generate.png)
 - **水印 & Logo** — 自定义水印文字、位置、透明度；上传个人/品牌 Logo
 - **分享链接** — 将当前内容与样式压缩为 URL，一键分享给他人继续编辑
 - **用户系统** — 注册登录后自动同步云端草稿，换设备无缝继续
