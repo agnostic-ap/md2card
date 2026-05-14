@@ -4,7 +4,7 @@
 
 写 Markdown → 选主题 → 导出 PNG / PDF / SVG
 
-🌐 **在线体验**：[https://your-domain.com](https://your-domain.com)
+🌐 **在线体验**：[mdcard.cn](https://mdcard.cn)（即将上线）
 
 ---
 
@@ -26,7 +26,7 @@
 > 需要 Node.js ≥ 20、Nginx、PM2
 
 ```bash
-git clone https://github.com/your-username/md2card.git
+git clone https://github.com/agnostic-ap/md2card.git
 cd md2card
 
 # 构建前端
