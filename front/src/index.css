@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :root {
+    --background: #FAFAF7;
+    --foreground: #14110D;
+    --card-shell: #FFFFFF;
+    --muted: #6B6560;
+    --muted-foreground: #6B6560;
+    --accent-ui: #FF5C28;
+    --border: #E8E3DA;
+    --ring: #FF5C28;
+    --surface-soft: #F4EFE5;
+    --surface-wash: #FFF8F1;
+    --shadow-panel: 0 18px 42px -28px rgba(20, 17, 13, 0.35), 0 0 0 1px rgba(20, 17, 13, 0.03);
+  }
+
+  .dark {
+    --background: #191612;
+    --foreground: #FAFAF7;
+    --card-shell: #211D18;
+    --muted: #A89F96;
+    --muted-foreground: #BDB4A9;
+    --accent-ui: #FF7448;
+    --border: #3B332B;
+    --ring: #FF7448;
+    --surface-soft: #272119;
+    --surface-wash: #211A14;
+    --shadow-panel: 0 18px 42px -28px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family:
+      PingFang SC,
+      HarmonyOS Sans SC,
+      Source Han Sans SC,
+      Noto Sans SC,
+      -apple-system,
+      BlinkMacSystemFont,
+      Segoe UI,
+      Helvetica Neue,
+      system-ui,
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    min-height: 100dvh;
+  }
+}
+
+@layer components {
+  .app-chrome-header {
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+  }
+
+  .app-panel {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-shell);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .app-panel-titlebar {
+    background: color-mix(in srgb, var(--surface-soft) 58%, var(--card-shell));
+  }
+}
