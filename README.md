@@ -6,7 +6,11 @@
 
 写 Markdown → 选主题 → 导出 PNG / PDF / SVG
 
-🌐 **在线体验**：[mdcard.cn](https://mdcard.cn)（即将上线）
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/agnostic-ap/md2card?style=flat)](https://github.com/agnostic-ap/md2card/stargazers)
+[![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-blue)](https://agnostic-ap.github.io/md2card/)
+
+🌐 **在线体验**：[mdcard.cn](https://mdcard.cn)（即将上线） · [免费试用 →](https://agnostic-ap.github.io/md2card/)
 
 ![编辑器截图](docs/screenshots/editor.png)
 
@@ -28,6 +32,20 @@
 ---
 
 ## 快速自部署
+
+### Docker（推荐）
+
+> 仅需 Docker
+
+```bash
+git clone https://github.com/agnostic-ap/md2card.git
+cd md2card
+docker compose up -d
+```
+
+访问 `http://localhost` 即可使用。数据持久化在 Docker volume 中。
+
+### 手动部署
 
 > 需要 Node.js ≥ 20、Nginx、PM2
 

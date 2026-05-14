@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3747
+      FRONTEND_ORIGIN: http://localhost
+    volumes:
+      - backend-data:/app/data
+
+  frontend:
+    build: ./front
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend-data:

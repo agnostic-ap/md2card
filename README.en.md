@@ -6,7 +6,11 @@
 
 Write Markdown → Pick a theme → Export PNG / PDF / SVG
 
-🌐 **Live demo**: [mdcard.cn](https://mdcard.cn) *(coming soon)*
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/agnostic-ap/md2card?style=flat)](https://github.com/agnostic-ap/md2card/stargazers)
+[![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-blue)](https://agnostic-ap.github.io/md2card/)
+
+🌐 **Live demo**: [mdcard.cn](https://mdcard.cn) *(coming soon)* · [Try it free →](https://agnostic-ap.github.io/md2card/)
 
 ![Editor screenshot](docs/screenshots/editor.png)
 
@@ -28,6 +32,20 @@ Write Markdown → Pick a theme → Export PNG / PDF / SVG
 ---
 
 ## Self-hosting
+
+### Docker (recommended)
+
+> Requires Docker only
+
+```bash
+git clone https://github.com/agnostic-ap/md2card.git
+cd md2card
+docker compose up -d
+```
+
+Open `http://localhost`. Data is persisted in a Docker volume.
+
+### Manual
 
 > Requires Node.js ≥ 20, Nginx, PM2
 
