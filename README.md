@@ -1,3 +1,5 @@
+[English](./README.en.md) | 中文
+
 # MD2Card · 墨工坊
 
 **把 Markdown 变成精美内容卡片，三步搞定。**
