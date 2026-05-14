@@ -23,7 +23,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SnippetMenu } from '@/features/editor/SnippetMenu'
-import { AiGenerateDialog } from '@/features/ai/AiGenerateDialog'
+import { Sparkles } from 'lucide-react'
+import { toast } from 'sonner'
 
 const btn = 'h-8 w-8 shrink-0 p-0'
 
@@ -222,7 +223,20 @@ export function MarkdownToolbar() {
         <Minus className="size-4" />
       </Button>
       <div className="ml-auto flex items-center gap-1.5 pl-2">
-        <AiGenerateDialog />
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 gap-1.5 px-2.5 text-sm"
+          onClick={() =>
+            toast('AI 生成功能需要登录', {
+              description: '前往 mdcard.cn 注册账号后使用',
+              action: { label: '去官网', onClick: () => window.open('https://mdcard.cn', '_blank') },
+            })
+          }
+        >
+          <Sparkles className="size-3.5" />
+          <span className="hidden sm:inline">AI 生成</span>
+        </Button>
         <SnippetMenu />
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BookOpen, Check, Home, Moon, RotateCcw, Share2, Sun } from 'lucide-react'
+import { BookOpen, Check, Home, LogIn, Moon, RotateCcw, Share2, Sun } from 'lucide-react'
 import { toast, Toaster } from 'sonner'
 import { BrandMark } from '@/components/BrandMark'
 import {
@@ -97,7 +97,9 @@ function AppLayout() {
           <div className="ml-auto flex shrink-0 items-center gap-2">
             <SaveIndicator />
             <a
-              href="#/"
+              href="https://mdcard.cn"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex h-8 items-center gap-1.5 rounded-md border border-(--border) bg-(--card-shell)/70 px-2.5 text-sm text-(--muted-foreground) transition-colors hover:border-(--accent-ui)/30 hover:bg-(--surface-wash) hover:text-(--foreground)"
             >
               <Home className="size-3.5" />
@@ -143,6 +145,15 @@ function AppLayout() {
               <Share2 className="size-3.5" />
               <span className="hidden sm:inline">分享</span>
             </button>
+            <a
+              href="https://mdcard.cn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-8 items-center gap-1.5 rounded-md border border-(--border) bg-(--card-shell)/70 px-2.5 text-sm text-(--muted-foreground) transition-colors hover:border-(--accent-ui)/30 hover:bg-(--surface-wash) hover:text-(--foreground)"
+            >
+              <LogIn className="size-3.5" />
+              <span className="hidden sm:inline">登录</span>
+            </a>
           </div>
         </div>
       </header>
