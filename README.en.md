@@ -108,4 +108,4 @@ Frontend runs at `http://localhost:5173` by default; API requests are proxied to
 
 ## License
 
-[MIT](./LICENSE)
+[AGPL-3.0](./LICENSE)
