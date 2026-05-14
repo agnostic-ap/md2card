@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { AlertCircle, BookOpen, Check, Cloud, Home, Loader2, Moon, RotateCcw, Share2, Sun } from 'lucide-react'
+import { BookOpen, Check, Home, Moon, RotateCcw, Share2, Sun } from 'lucide-react'
 import { toast, Toaster } from 'sonner'
 import { BrandMark } from '@/components/BrandMark'
 import {
@@ -16,10 +16,6 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { encodeShareUrl } from '@/lib/shareUrl'
 import { cn } from '@/lib/utils'
 import { trackEvent, trackPageView } from '@/lib/analytics'
-import { AuthProvider, useAuth } from '@/state/AuthContext'
-import { AuthDialog } from '@/features/auth/AuthDialog'
-import { UserMenu } from '@/features/auth/UserMenu'
-import { WorkspaceSyncProvider, useWorkspaceSync } from '@/state/WorkspaceSync'
 import {
   Dialog,
   DialogContent,
@@ -40,46 +36,7 @@ function useHash() {
 }
 
 function SaveIndicator() {
-  const { user } = useAuth()
   const { savedAt } = useEditor()
-  const { syncStatus } = useWorkspaceSync()
-
-  if (user) {
-    if (syncStatus === 'loading') {
-      return (
-        <span className="hidden items-center gap-1 text-xs text-(--muted-foreground) sm:flex">
-          <Loader2 className="size-3 animate-spin" />
-          加载云端…
-        </span>
-      )
-    }
-    if (syncStatus === 'syncing') {
-      return (
-        <span className="hidden items-center gap-1 text-xs text-(--muted-foreground) sm:flex">
-          <Loader2 className="size-3 animate-spin" />
-          同步中…
-        </span>
-      )
-    }
-    if (syncStatus === 'synced') {
-      return (
-        <span className="hidden items-center gap-1 text-xs text-(--muted-foreground) sm:flex">
-          <Cloud className="size-3 text-green-500" />
-          已同步
-        </span>
-      )
-    }
-    if (syncStatus === 'error') {
-      return (
-        <span className="hidden items-center gap-1 text-xs text-red-400 sm:flex">
-          <AlertCircle className="size-3" />
-          同步失败
-        </span>
-      )
-    }
-    return null
-  }
-
   if (!savedAt) return null
   return (
     <span className="hidden items-center gap-1 text-xs text-(--muted-foreground) sm:flex">
@@ -103,7 +60,6 @@ function AppLayout() {
   const { state, dispatch, resetToDefault } = useEditor()
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const [dialog, setDialog] = useState<'share' | 'reset' | null>(null)
-  const [authOpen, setAuthOpen] = useState(false)
 
   function handleShareConfirm() {
     setDialog(null)
@@ -187,7 +143,6 @@ function AppLayout() {
               <Share2 className="size-3.5" />
               <span className="hidden sm:inline">分享</span>
             </button>
-            <UserMenu onSignIn={() => setAuthOpen(true)} />
           </div>
         </div>
       </header>
@@ -240,11 +195,6 @@ function AppLayout() {
         </DialogContent>
       </Dialog>
 
-      <AuthDialog
-        open={authOpen}
-        defaultMode="signin"
-        onOpenChange={setAuthOpen}
-      />
     </div>
   )
 }
@@ -267,16 +217,12 @@ function AppRouter() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <EditorProvider>
-          <WorkspaceSyncProvider>
-            <EditorViewBridge>
-              <AppRouter />
-              <AppToaster />
-            </EditorViewBridge>
-          </WorkspaceSyncProvider>
-        </EditorProvider>
-      </AuthProvider>
+      <EditorProvider>
+        <EditorViewBridge>
+          <AppRouter />
+          <AppToaster />
+        </EditorViewBridge>
+      </EditorProvider>
     </ErrorBoundary>
   )
 }
