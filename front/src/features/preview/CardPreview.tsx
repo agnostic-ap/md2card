@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, type MutableRefObject } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react'
 import { FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEditor } from '@/state/EditorContext'
@@ -53,6 +53,27 @@ export function CardPreview({
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   // Tracks last scroll-derived active index to suppress no-op dispatches
   const lastScrollActiveRef = useRef(activeCardIndex)
+
+  // Auto-fit zoom: shrink the card on narrow viewports so it never overflows.
+  // Layers on top of the user's previewZoom — we take the min so explicit zoom-out still wins.
+  const [containerWidth, setContainerWidth] = useState(0)
+  useEffect(() => {
+    const el = scrollContainerRef.current
+    if (!el) return
+    const ro = new ResizeObserver((entries) => {
+      const entry = entries[0]
+      if (entry) setContainerWidth(entry.contentRect.width)
+    })
+    ro.observe(el)
+    setContainerWidth(el.clientWidth)
+    return () => ro.disconnect()
+  }, [])
+  const SCROLL_PADDING = 32 // matches p-4 horizontal padding
+  const availableWidth = Math.max(0, containerWidth - SCROLL_PADDING)
+  const fitZoom = availableWidth > 0 && cardWidth > availableWidth
+    ? availableWidth / cardWidth
+    : 1
+  const effectiveZoom = Math.min(previewZoom, fitZoom)
 
   useEffect(() => {
     lastScrollActiveRef.current = activeCardIndex
@@ -138,7 +159,7 @@ export function CardPreview({
                 height={cardHeight}
                 fontScale={fontScale}
                 hideOverflow={hideOverflow}
-                previewZoom={previewZoom}
+                previewZoom={effectiveZoom}
                 pageIndex={i}
                 pageTotal={segments.length}
                 showPageNumbers={showPageNumbers}

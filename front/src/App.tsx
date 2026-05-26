@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { AlertCircle, BookOpen, Check, Cloud, Home, Loader2, Moon, RotateCcw, Share2, Sun } from 'lucide-react'
+import { AlertCircle, BookOpen, Check, Cloud, Eye, FileEdit, Home, Loader2, Moon, RotateCcw, Settings2, Share2, Sun } from 'lucide-react'
+import { useMediaQuery } from '@/lib/useMediaQuery'
 import { toast, Toaster } from 'sonner'
 import { BrandMark } from '@/components/BrandMark'
 import {
@@ -98,12 +99,16 @@ function useDocumentTitle() {
   }, [state.markdown])
 }
 
+type MobileTab = 'editor' | 'preview' | 'settings'
+
 function AppLayout() {
   useDocumentTitle()
   const { state, dispatch, resetToDefault } = useEditor()
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const [dialog, setDialog] = useState<'share' | 'reset' | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 767px)')
+  const [mobileTab, setMobileTab] = useState<MobileTab>('editor')
 
   function handleShareConfirm() {
     setDialog(null)
@@ -193,10 +198,55 @@ function AppLayout() {
       </header>
 
       <main className="flex min-h-0 flex-1 flex-col gap-3 bg-[radial-gradient(circle_at_18%_8%,rgba(255,92,40,0.06),transparent_34%),radial-gradient(circle_at_82%_92%,rgba(232,179,58,0.05),transparent_42%)] p-3 md:flex-row md:gap-4 md:p-5">
-        <MarkdownEditor />
-        <CardPreview cardRefs={cardRefs} />
-        <BottomPanel cardRefs={cardRefs} />
+        {isMobile ? (
+          <>
+            <div className={cn('flex min-h-0 flex-1', mobileTab === 'editor' ? '' : 'hidden')}>
+              <MarkdownEditor />
+            </div>
+            <div className={cn('flex min-h-0 flex-1', mobileTab === 'preview' ? '' : 'hidden')}>
+              <CardPreview cardRefs={cardRefs} />
+            </div>
+            <div className={cn('flex min-h-0 flex-1', mobileTab === 'settings' ? '' : 'hidden')}>
+              <BottomPanel cardRefs={cardRefs} />
+            </div>
+          </>
+        ) : (
+          <>
+            <MarkdownEditor />
+            <CardPreview cardRefs={cardRefs} />
+            <BottomPanel cardRefs={cardRefs} />
+          </>
+        )}
       </main>
+
+      {isMobile && (
+        <nav
+          className="grid shrink-0 grid-cols-3 border-t border-(--border) bg-(--card-shell)/95 backdrop-blur supports-[backdrop-filter]:bg-(--card-shell)/80"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+          {(
+            [
+              { id: 'editor', label: '编辑', Icon: FileEdit },
+              { id: 'preview', label: '预览', Icon: Eye },
+              { id: 'settings', label: '设置', Icon: Settings2 },
+            ] as { id: MobileTab; label: string; Icon: typeof FileEdit }[]
+          ).map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setMobileTab(id)}
+              className={cn(
+                'flex flex-col items-center justify-center gap-0.5 py-2 text-[11px] font-medium transition-colors',
+                mobileTab === id
+                  ? 'text-(--accent-ui)'
+                  : 'text-(--muted-foreground) hover:text-(--foreground)',
+              )}
+              aria-pressed={mobileTab === id}>
+              <Icon className="size-4" />
+              {label}
+            </button>
+          ))}
+        </nav>
+      )}
 
       <Dialog
         open={dialog === 'share'}
