@@ -2,18 +2,22 @@ services:
   backend:
     build: ./backend
     restart: unless-stopped
+    env_file:
+      - ./backend/.env
     environment:
       HOST: 0.0.0.0
       PORT: 3747
-      FRONTEND_ORIGIN: http://localhost
     volumes:
       - backend-data:/app/data
+    expose:
+      - "3747"
 
   frontend:
     build: ./front
     restart: unless-stopped
     ports:
-      - "80:80"
+      # Bound to localhost only — Caddy on the host reverse-proxies mdcard.cn here
+      - "127.0.0.1:8080:80"
     depends_on:
       - backend
 
