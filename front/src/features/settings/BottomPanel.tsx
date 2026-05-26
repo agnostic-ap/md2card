@@ -10,6 +10,7 @@ import { BACKGROUND_PRESETS } from '@/themes/backgroundPresets'
 import { LIGHT_OVERLAYS } from '@/themes/lightOverlays'
 import { FONT_PRESETS } from '@/themes/fontPresets'
 import { splitMarkdown } from '@/features/preview/splitMarkdown'
+import { trackEvent } from '@/lib/analytics'
 import { exportNodeToPng } from '@/export/exportPng'
 import { exportNodeToSvg } from '@/export/exportSvg'
 import { downloadCardsAsPngZip } from '@/export/downloadZip'
@@ -100,6 +101,7 @@ export function BottomPanel({ cardRefs }: Props) {
     void runExport(async () => {
       const nodes = cardRefs.current.filter(Boolean) as HTMLElement[]
       if (nodes.length === 0) throw new Error('没有可导出的卡片')
+      trackEvent('export_png', { cards: nodes.length })
       if (nodes.length === 1) {
         const dataUrl = await exportNodeToPng(nodes[0]!, state.exportScale)
         saveAs(dataUrl, `${fileBaseName}.png`)
@@ -113,6 +115,7 @@ export function BottomPanel({ cardRefs }: Props) {
     void runExport(async () => {
       const nodes = cardRefs.current.filter(Boolean) as HTMLElement[]
       if (nodes.length === 0) throw new Error('没有可导出的卡片')
+      trackEvent('export_svg', { cards: nodes.length })
       if (nodes.length === 1) {
         const svg = await exportNodeToSvg(nodes[0]!)
         const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' })
@@ -135,6 +138,7 @@ export function BottomPanel({ cardRefs }: Props) {
     void runExport(async () => {
       const nodes = cardRefs.current.filter(Boolean) as HTMLElement[]
       if (nodes.length === 0) throw new Error('没有可导出的卡片')
+      trackEvent('export_pdf', { cards: nodes.length })
       const { exportCardsToPdf } = await import('@/export/exportPdf')
       await exportCardsToPdf(
         nodes,
@@ -149,6 +153,7 @@ export function BottomPanel({ cardRefs }: Props) {
   const handleDownloadA4Pdf = () => {
     void runExport(async () => {
       if (!state.markdown.trim()) throw new Error('没有可导出的内容')
+      trackEvent('export_a4_pdf')
       const theme = getCardTheme(state.cardThemeId)
       const { exportMarkdownToA4Pdf } = await import('@/export/exportPdf')
       await exportMarkdownToA4Pdf(
@@ -168,6 +173,7 @@ export function BottomPanel({ cardRefs }: Props) {
   }
 
   const handleDownloadMarkdown = () => {
+    trackEvent('export_md')
     const blob = new Blob([state.markdown], { type: 'text/markdown;charset=utf-8' })
     saveAs(blob, `${fileBaseName}.md`)
   }

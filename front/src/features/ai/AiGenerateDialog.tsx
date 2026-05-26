@@ -17,6 +17,7 @@ import {
   Wand2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { trackEvent } from '@/lib/analytics'
 import { useEditor, useEditorViewBridge } from '@/state/EditorContext'
 import { replaceDoc } from '@/features/editor/markdownInsert'
 import {
@@ -316,6 +317,7 @@ export function AiGenerateDialog() {
       localStorage.setItem(S.localModel, localModel)
     }
 
+    trackEvent('ai_generate', { mode, provider })
     try {
       const result = await generateContent({
         mode,

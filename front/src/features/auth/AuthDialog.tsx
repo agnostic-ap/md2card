@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/form'
 import { useAuth } from '@/state/AuthContext'
 import { cn } from '@/lib/utils'
+import { trackEvent } from '@/lib/analytics'
 
 type AuthMode = 'signin' | 'signup'
 
@@ -69,6 +70,7 @@ export function AuthDialog({ open, defaultMode = 'signin', onOpenChange }: AuthD
   async function handleSignIn(values: SignInValues) {
     try {
       await signIn(values)
+      trackEvent('signin_success')
       toast.success('已登录')
       onOpenChange(false)
     } catch (err) {
@@ -81,6 +83,7 @@ export function AuthDialog({ open, defaultMode = 'signin', onOpenChange }: AuthD
   async function handleSignUp(values: SignUpValues) {
     try {
       await signUp(values)
+      trackEvent('signup_success')
       toast.success('注册成功，欢迎使用墨工坊')
       onOpenChange(false)
     } catch (err) {

@@ -1,3 +1,5 @@
+import { track as beacon } from './track'
+
 type AnalyticsProvider = 'none' | 'ga' | 'plausible'
 
 type AnalyticsEvent = {
@@ -65,6 +67,7 @@ export function initAnalytics() {
 
 export function trackPageView(path: string, title = document.title) {
   persistLocalEvent({ name: 'page_view', path, title, ts: new Date().toISOString() })
+  beacon('page_view', { title })
 
   if (provider === 'ga' && gaMeasurementId && window.gtag) {
     window.gtag('event', 'page_view', {
@@ -85,6 +88,7 @@ export function trackEvent(
 ) {
   const path = `${window.location.pathname}${window.location.hash}`
   persistLocalEvent({ name, path, props, ts: new Date().toISOString() })
+  beacon(name, props)
 
   if (provider === 'ga' && window.gtag) {
     window.gtag('event', name, props)
