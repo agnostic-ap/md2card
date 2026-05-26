@@ -1054,6 +1054,11 @@ const Footer = () => (
         <span>© 2026 MD2Card · 用 Markdown 把内容写好</span>
         <span>v0.9.4 · Built in browser, runs in browser.</span>
       </div>
+      <div className="footer-beian">
+        <a href="http://beian.miit.gov.cn/" target="_blank" rel="noreferrer noopener">
+          沪ICP备2026021880号
+        </a>
+      </div>
     </div>
   </footer>
 )

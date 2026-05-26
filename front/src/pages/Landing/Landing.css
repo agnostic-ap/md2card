@@ -1455,6 +1455,15 @@
   font-size: 11px;
   color: var(--ink-4);
 }
+.footer-beian {
+  display: flex; justify-content: center; align-items: center;
+  padding-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-4);
+}
+.footer-beian a { color: var(--ink-4); transition: color 0.15s; }
+.footer-beian a:hover { color: var(--ink); }
 @media (max-width: 720px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-bot { flex-direction: column; gap: 12px; }
