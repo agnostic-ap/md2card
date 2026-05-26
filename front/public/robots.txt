@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Hash-based routes are JS-rendered; nothing else to block.
+Disallow: /track
+
+Sitemap: https://mdcard.cn/sitemap.xml
