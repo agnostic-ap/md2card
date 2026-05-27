@@ -1017,7 +1017,9 @@ const CTA = () => (
   </section>
 )
 
-const Footer = () => (
+const Footer = () => {
+  const [xhsOpen, setXhsOpen] = useState(false)
+  return (
   <footer className="footer">
     <div className="container">
       <div className="footer-grid">
@@ -1045,9 +1047,16 @@ const Footer = () => (
         </div>
         <div className="footer-col">
           <div className="h">联系</div>
-          <a href="#feedback">反馈与建议</a>
-          <a href="#community">用户社群</a>
-          <a href="#twitter">小红书</a>
+          <a href="mailto:dc23byte@163.com?subject=MD2Card%20%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%BB%BA%E8%AE%AE">反馈与建议</a>
+          <a href="mailto:dc23byte@163.com?subject=%E5%8A%A0%E5%85%A5%20MD2Card%20%E7%94%A8%E6%88%B7%E7%A4%BE%E7%BE%A4">用户社群</a>
+          <a
+            href="#xiaohongshu"
+            onClick={(e) => {
+              e.preventDefault()
+              setXhsOpen(true)
+            }}>
+            小红书
+          </a>
         </div>
       </div>
       <div className="footer-bot">
@@ -1060,8 +1069,31 @@ const Footer = () => (
         </a>
       </div>
     </div>
+    {xhsOpen && (
+      <div
+        className="xhs-modal-backdrop"
+        onClick={() => setXhsOpen(false)}
+        role="presentation">
+        <div
+          className="xhs-modal"
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-label="小红书二维码">
+          <button
+            type="button"
+            className="xhs-modal-close"
+            aria-label="关闭"
+            onClick={() => setXhsOpen(false)}>
+            ×
+          </button>
+          <img src="/xiaohongshu-qr.jpg" alt="小红书账号 oT25 二维码" />
+          <p className="xhs-modal-hint">扫码或长按识别添加</p>
+        </div>
+      </div>
+    )}
   </footer>
-)
+  )
+}
 
 /* ───────── Page ───────── */
 export default function Landing() {
