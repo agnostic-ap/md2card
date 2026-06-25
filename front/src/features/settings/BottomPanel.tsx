@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
 import { cn } from '@/lib/utils'
-import { useEditor } from '@/state/EditorContext'
+import { MDCARD_WATERMARK_PRESET, useEditor } from '@/state/EditorContext'
 import { CARD_THEMES, getCardTheme } from '@/themes/cardThemes'
 import { BACKGROUND_PRESETS } from '@/themes/backgroundPresets'
 import { LIGHT_OVERLAYS } from '@/themes/lightOverlays'
@@ -40,6 +40,10 @@ export function BottomPanel({ cardRefs }: Props) {
   const logoFileRef = useRef<HTMLInputElement | null>(null)
   const [openSections, setOpenSections] = useState<Set<string>>(() => new Set(DEFAULT_OPEN))
   const [showManual, setShowManual] = useState(false)
+  const isMdcardWatermarkActive =
+    state.watermark.enabled &&
+    state.watermark.text === MDCARD_WATERMARK_PRESET.text &&
+    state.watermark.position === MDCARD_WATERMARK_PRESET.position
 
   const toggle = useCallback((id: string) => {
     setOpenSections((prev) => {
@@ -623,6 +627,26 @@ export function BottomPanel({ cardRefs }: Props) {
                 dispatch({ type: 'patchWatermark', payload: { enabled: v } })
               }
             />
+          </div>
+          <div className="rounded-md border border-(--border)/70 bg-(--card-shell)/50 p-2.5">
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0 space-y-0.5">
+                <Label htmlFor="mdcard-watermark">mdcard.cn 水印</Label>
+                <p className="text-xs leading-5 text-(--muted-foreground)">
+                  导出图左下角显示 power by mdcard.cn。
+                </p>
+              </div>
+              <Switch
+                id="mdcard-watermark"
+                checked={isMdcardWatermarkActive}
+                onCheckedChange={(v) =>
+                  dispatch({
+                    type: 'patchWatermark',
+                    payload: v ? MDCARD_WATERMARK_PRESET : { enabled: false },
+                  })
+                }
+              />
+            </div>
           </div>
           <div className={state.watermark.enabled ? 'space-y-3' : 'pointer-events-none space-y-3 opacity-50'}>
             <div className="space-y-1">

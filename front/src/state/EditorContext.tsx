@@ -46,6 +46,16 @@ function loadFromShareUrl(): EditorState | null {
 
 export const DEFAULT_LOGO_DATA_URL = `data:image/svg+xml;utf8,${encodeURIComponent(defaultLogoSvg)}`
 
+export const MDCARD_WATERMARK_PRESET: WatermarkConfig = {
+  enabled: true,
+  text: 'power by mdcard.cn',
+  position: 'bottom-left',
+  opacity: 0.42,
+  fontSize: 12,
+  color: null,
+  rotate: 0,
+}
+
 export type AppThemeMode = 'light' | 'dark'
 
 export type EditorState = {
@@ -148,15 +158,7 @@ export const initialEditorState: EditorState = {
   accentColor: null,
   pageNumberColor: null,
   fontFamily: null,
-  watermark: {
-    enabled: true,
-    text: '@程序员英语buff',
-    position: 'center',
-    opacity: 0.14,
-    fontSize: 14,
-    color: null,
-    rotate: 0,
-  },
+  watermark: { ...MDCARD_WATERMARK_PRESET, enabled: false },
   logo: {
     dataUrl: DEFAULT_LOGO_DATA_URL,
     position: 'top-right',
