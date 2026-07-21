@@ -1,5 +1,7 @@
 [English](./README.en.md) | 中文
 
+![MD2Card](docs/screenshots/landing.jpg)
+
 # MD2Card · 墨工坊
 
 **把 Markdown 变成精美内容卡片，三步搞定。**
@@ -10,7 +12,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/agnostic-ap/md2card?style=flat)](https://github.com/agnostic-ap/md2card/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-blue)](https://agnostic-ap.github.io/md2card/)
 
-🌐 **在线体验**：[mdcard.cn](https://mdcard.cn)（即将上线） · [免费试用 →](https://agnostic-ap.github.io/md2card/)
+🌐 **在线体验**：[mdcard.cn](https://mdcard.cn) · [免费试用 →](https://agnostic-ap.github.io/md2card/)
 
 ![编辑器截图](docs/screenshots/editor.png)
 
